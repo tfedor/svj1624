@@ -64,7 +64,7 @@
         history.pushState(null, "", url);
     }
 
-    onMount(() => {
+    function onurl() {
         const url = new URL(window.location.href);
         const q  = url.searchParams.get("q");
         const v1 = url.searchParams.get("v1");
@@ -73,6 +73,11 @@
         if (q) { quorum = Number(q); }
         if (v1) { voting1 = Number(v1); }
         if (v2) { voting2 = Number(v2); }
+    }
+
+    onMount(() => {
+        onurl();
+        window.addEventListener("popstate", onurl);
     });
 </script>
 
