@@ -13,7 +13,7 @@
     <div class="part favor" style:right="{100 - favor}%">
         <div>
             <div>PRO</div>
-            <div lang="en">In favor</div>
+            <div lang="en">In Favor</div>
         </div>
     </div>
     <div class="part abstained" style:left="{favor}%" style:right="{against}%">
