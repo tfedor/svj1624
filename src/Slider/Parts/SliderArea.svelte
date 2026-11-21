@@ -61,7 +61,9 @@
     <div class="slider"
          bind:this={nodeSlider}
          bind:clientWidth={sliderWidth}
-         onmousedown={sliderStart}>
+         onmousedown={sliderStart}
+         ontouchmove={sliderMove}
+         ontouchend={sliderEnd}>
 
         <div class={["bg", isActive && "is-active"]}>
             {@render fill?.()}
