@@ -45,7 +45,7 @@
     }
 
     function sliderMove(e: MouseEvent | TouchEvent) {
-        if (e instanceof TouchEvent) {
+        if ("touches" in e) {
             e.preventDefault();
         }
         handleSliderValueUpdate(e);
