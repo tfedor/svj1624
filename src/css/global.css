@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Strait&display=swap');
+
+:root {
+    --text: #0f1010;
+    --background: #fbfcfd;
+    --primary: #d5d1c0;
+    --secondary: #f0ebd8;
+    --accent: #748CAB;
+
+    --size-small: 14px;
+
+    --positive: #0fae56;
+    --positive-dim: #2a9359;
+    --negative: #b13d2b;
+    --negative-dim: #9d4b3e;
+}
+
+body {
+    font-family: "Strait", sans-serif;
+    font-weight: 400;
+    background: var(--background);
+    color: var(--text);
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Strait", sans-serif;
+}
+
+html { font-size: 16px }
+h1 {font-size: 4.210rem; /* 67.36px */}
+h2 {font-size: 3.158rem; /* 50.56px */}
+h3 {font-size: 2.369rem; /* 37.92px */}
+h4 {font-size: 1.777rem; /* 28.48px */}
+h5 {font-size: 1.333rem; /* 21.28px */}
+small {font-size: 0.750rem; /* 12px */}
+
+div[lang="en"], span[lang="en"] {
+    opacity: 0.8;
+}
