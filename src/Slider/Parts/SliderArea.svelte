@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {Snippet} from "svelte";
+    import {onMount, type Snippet} from "svelte";
 
     interface Props {
         isActive?: boolean;
@@ -45,6 +45,9 @@
     }
 
     function sliderMove(e: MouseEvent | TouchEvent) {
+        if (e instanceof TouchEvent) {
+            e.preventDefault();
+        }
         handleSliderValueUpdate(e);
     }
 
@@ -54,6 +57,12 @@
         document.removeEventListener("mouseup", sliderEnd);
         nodeSlider.dispatchEvent(new Event("change", {bubbles: true}));
     }
+
+    onMount(() => {
+        nodeSlider.addEventListener("touchstart", sliderStart, {passive: false});
+        nodeSlider.addEventListener("touchmove", sliderMove, {passive: false});
+        nodeSlider.addEventListener("touchend", sliderEnd, {passive: false});
+    });
 </script>
 
 <div>
@@ -61,9 +70,7 @@
     <div class="slider"
          bind:this={nodeSlider}
          bind:clientWidth={sliderWidth}
-         onmousedown={sliderStart}
-         ontouchmove={sliderMove}
-         ontouchend={sliderEnd}>
+         onmousedown={sliderStart}>
 
         <div class={["bg", isActive && "is-active"]}>
             {@render fill?.()}
