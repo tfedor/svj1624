@@ -1,4 +1,5 @@
 <script lang="ts">
+    import {onMount, untrack} from "svelte";
     import QuorumSlider from "./Slider/QuorumSlider.svelte";
     import VotingSlider from "./Slider/VotingSlider.svelte";
     import VoteResults from "./VoteResults.svelte";
@@ -53,6 +54,26 @@
         abstained: Math.round((finalVotes.abstained / votesPresent) * 100),
         against:   Math.round((finalVotes.against   / votesPresent) * 100)
     });
+
+    function onupdate() {
+        const url = new URL(window.location.href);
+        url.searchParams.set("q", String(quorum));
+        url.searchParams.set("v1", String(voting1));
+        url.searchParams.set("v2", String(voting2));
+
+        history.pushState(null, "", url);
+    }
+
+    onMount(() => {
+        const url = new URL(window.location.href);
+        const q  = url.searchParams.get("q");
+        const v1 = url.searchParams.get("v1");
+        const v2 = url.searchParams.get("v2");
+
+        if (q) { quorum = Number(q); }
+        if (v1) { voting1 = Number(v1); }
+        if (v2) { voting2 = Number(v2); }
+    });
 </script>
 
 <main>
@@ -72,7 +93,7 @@
         </header>
 
         <div class="slider">
-            <QuorumSlider garage={garageCut} bind:value={quorum} />
+            <QuorumSlider garage={garageCut} bind:value={quorum} {onupdate} />
         </div>
     </section>
 
@@ -101,7 +122,7 @@
         </header>
 
         <div class="slider">
-            <VotingSlider bind:value1={voting1} bind:value2={voting2} />
+            <VotingSlider bind:value1={voting1} bind:value2={voting2} {onupdate} />
         </div>
 
         <footer>

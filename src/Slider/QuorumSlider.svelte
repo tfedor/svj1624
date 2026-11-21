@@ -7,7 +7,8 @@
 
     interface Props {
         garage: number,
-        value?: number
+        value?: number,
+        onupdate: () => void
     }
 
     const min = 0;
@@ -16,12 +17,18 @@
     let {
         garage,
         value = $bindable(max),
+        onupdate
     }: Props = $props();
 
     let activeHandle = $state(false);
 
     let v = $derived(new Value({initial: value, min, max, softmin: 50}));
     let x = $derived(v.position);
+
+    function onEnd(): void {
+        activeHandle = false;
+        onupdate();
+    }
 
     onMount(() => {
         if (value < min || value > max) {
@@ -38,7 +45,7 @@
 <SliderArea isActive={activeHandle}
             onValue={value => v.setPercentage(value)}
             onStart={() => activeHandle = true}
-            onEnd={() => activeHandle = false}>
+            {onEnd}>
 
     {#snippet fill()}
         <SliderFill from={0} to={garage} render="min" type="garage">

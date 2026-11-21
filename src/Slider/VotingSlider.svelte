@@ -5,19 +5,19 @@
     import Value from "./Value.svelte.ts";
 
     interface Props {
-        min?: number;
-        max?: number;
-        value1?: number;
-        value2?: number;
-        formatter?: (value: number) => string;
-        ticks?: number|number[]; // ticks each {x} units, not number of ticks
+        min?: number,
+        max?: number,
+        value1?: number,
+        value2?: number,
+        onupdate: () => void
     }
 
     let {
         min = 0,
         max = 100,
         value1 = $bindable(min),
-        value2 = $bindable(max)
+        value2 = $bindable(max),
+        onupdate
     }: Props = $props();
 
     const v1 = $derived(new Value({initial: value1, min, max}));
@@ -58,18 +58,23 @@
         }
     }
 
+    function onEnd() {
+        activeHandle = 0;
+        onupdate();
+    }
+
     $effect(() => {
         value1 = v1.value;
     });
     $effect(() => {
         value2 = v2.value;
-    })
+    });
 </script>
 
 
 <SliderArea isActive={activeHandle !== 0}
         onValue={handleSliderValue}
-        onEnd={() => activeHandle = 0}>
+        {onEnd}>
 
     {#snippet fill()}
         <SliderFill render="min" type="favor" from={0} to={Math.min(v1.position, v2.position)}>
